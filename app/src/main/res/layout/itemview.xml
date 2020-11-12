@@ -37,7 +37,7 @@
                 android:textSize="25dp"
                 android:text="나이"
                 android:layout_marginLeft="10dp"
-                android:id="@+id/user"/>
+                android:id="@+id/user_age"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
