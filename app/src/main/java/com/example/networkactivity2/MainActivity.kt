@@ -28,14 +28,22 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val adapter = RecyclerViewAdapter(NetworkTask(), LayoutInflater.from(this))
-        recycler_view.adapter = adapter
-        recycler_view.layoutManager = LinearLayoutManager(this)
-
+       NetworkTask().execute()
     }
 }
 class NetworkTask():AsyncTask<Any?,Any?,Any?>(){
+    // 메인쓰레드로 넘어가는 오버라이드(메인스레드에서 실행이된다 즉, 다른 데이터를 쓸 수 있다.
+    // 원하는 결과 값은 >> 네트워크 서버에서 가지고 온 것을 RecyclerView에 집어넣는 것!
+    // 근데 내가 못 풀었던 것이 Recycler View 에 어떻게 가지고 온 데이터를 넣냐라는 것이었다.
+    // 쓰레드는 보통 메인 쓰레드가 사용이 되는데 네트워크 서버를 불러오는 건 메인 쓰레드에서
+    // 하면 안된다.(왜냐면 네트워크를 불러올 때 메인 쓰레드도 함께 멈추기 때문이다.*메인 쓰레드는 멈추면 안된다.
+    // 이러한 상황에서 다른 쓰레드에서 네트워크를 불러오는데 이것을 메인 쓰레드로 넘겨주기 위해서는
+    // onPostExcute에서 해줘야 한다.
+        //*onPostExcute => 우편을 실행하다? => 데이터를 보내다? 이런식으로 해석해도 될듯!
 
+    override fun onPostExecute(result: Any?) {
+        super.onPostExecute(result)
+    }
 
     override fun doInBackground(vararg params: Any?): Any? {
       val urlString: String = "http://mellowcode.org/json/students/"
@@ -79,48 +87,11 @@ class NetworkTask():AsyncTask<Any?,Any?,Any?>(){
         val datalist  = ArrayList<PersonList>()
 
 
-        return data
+        return null
     }
 
 }
-class PersonList () {
-    val buffer = ""
-    val data = Gson().fromJson(buffer,Array<Person>::class.java)
 
 
-}
 
-class RecyclerViewAdapter(
-    var itemList: NetworkTask,
-    val inflater: LayoutInflater
-) : RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>(){
-
-    inner class  ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val all: TextView
-
-
-        init {
-            all = itemView.findViewById(R.id.user_id)
-            val position: Int = adapterPosition
-            val allmost:String = itemList.get(position).all
-        }
-    }
-
-
-    override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): RecyclerViewAdapter.ViewHolder {
-       val view = inflater.inflate(R.layout.itemview, parent,false)
-        return  ViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return 7
-    }
-
-    override fun onBindViewHolder(holder: RecyclerViewAdapter.ViewHolder, position: Int) {
-            holder.all.setText(itemList.get(position).all)
-    }
-}
 
