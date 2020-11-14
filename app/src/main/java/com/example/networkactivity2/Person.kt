@@ -3,7 +3,7 @@ package com.example.networkactivity2
 import java.io.Serializable
 
 class Person (
-    var id: Int? = null,
+    var id: String? = null,
     var name: String? = null,
     var age: Int? = null,
     var intro: String? = null
