@@ -1,0 +1,22 @@
+
+
+
+Library
+- (네트워크 통신 라이브러리)
+    -1. Volly (구글 정식 디벨로퍼 웹사이트에 있는걸로!!)
+    -2. Retrofit
+- 권한 설정
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+     -
+          if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                   val reader = BufferedReader(
+                       InputStreamReader(
+                           connection.inputStream,
+                           "UTF-8"
+                       )
+                   )
+                   buffer = reader.readLine()
+               }
+               val data = Gson().fromJson(buffer, Array<Person>::class.java)
+     - implementation 'com.squareup.retrofit2:converter-gson:2.3.0'는 윗 구문을 자동을 해주는 권한설정이다.
