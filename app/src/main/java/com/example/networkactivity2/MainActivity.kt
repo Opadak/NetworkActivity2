@@ -54,7 +54,7 @@ class NetworkTask(
     //*onPostExcute => 우편을 실행하다? => 데이터를 보내다? 이런식으로 해석해도 될듯!
 
     override fun onPostExecute(result: Array<Person>?) { //뷰를 그릴 때 여기서 사용!
-
+        //실행이 되는 뷰를 불러오는 것!
          val adapter = PersonAdapter(result!!, inflater)
         recyclerView.adapter = adapter
 //        recyclerView.layoutManager = LinearLayoutManager(context)
@@ -62,6 +62,7 @@ class NetworkTask(
     }
 
     override fun doInBackground(vararg params: Any?): Array<Person> {
+        //요청을 보내는 것!
         val urlString: String = "http://mellowcode.org/json/students/"
         val url: URL = URL(urlString)
         val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
@@ -111,7 +112,7 @@ class NetworkTask(
 
 
 class PersonAdapter(
-    val PersonList: Array<Person>,
+    val PersonList: Array<Person>,  //Personlist 는  Person의 배열 타입이다!
     val inflater: LayoutInflater
 ) : RecyclerView.Adapter<PersonAdapter.ViewHolder>() {
     inner class ViewHolder(itemVIew: View) : RecyclerView.ViewHolder(itemVIew) {

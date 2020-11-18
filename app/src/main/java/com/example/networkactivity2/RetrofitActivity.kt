@@ -55,6 +55,8 @@ class RetrofitActivity : AppCompatActivity() {
                     }
                 }
 
+
+
             })
  //사용방법(POST) (1)
 //        val params = HashMap<String,Any> ()
